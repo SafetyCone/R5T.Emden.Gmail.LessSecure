@@ -23,8 +23,11 @@ namespace R5T.Emden.Gmail.LessSecure
 
         public void Send(MailMessage message)
         {
+            var fromAddress = this.GmailAuthentication.Value.Address;
             var fromAddressUsername = this.GmailAuthentication.Value.Username;
             var fromAddressPassword = this.GmailAuthentication.Value.Password;
+
+            message.From = new MailAddress(fromAddress);
 
             using (var smtpClient = new SmtpClient()
             {
