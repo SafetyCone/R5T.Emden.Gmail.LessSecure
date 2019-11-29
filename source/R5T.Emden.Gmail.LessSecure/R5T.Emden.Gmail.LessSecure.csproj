@@ -4,4 +4,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591;1573</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\R5T.Emden.Base\source\R5T.Emden.Base\R5T.Emden.Base.csproj" />
+  </ItemGroup>
 </Project>
