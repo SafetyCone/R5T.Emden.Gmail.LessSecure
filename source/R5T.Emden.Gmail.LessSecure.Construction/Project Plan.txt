@@ -1,0 +1,4 @@
+R5T.Emden.Gmail.LessSecure.Construction - A construction console-app for the library R5T.Emden.Gmail.LessSecure.
+
+Goals
+
