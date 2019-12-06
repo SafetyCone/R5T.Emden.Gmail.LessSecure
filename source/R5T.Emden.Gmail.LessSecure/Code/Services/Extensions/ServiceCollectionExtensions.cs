@@ -2,8 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-using R5T.Gimpolis;
-using R5T.Sardinia;
+using R5T.Argos;
 
 
 namespace R5T.Emden.Gmail.LessSecure
@@ -13,8 +12,7 @@ namespace R5T.Emden.Gmail.LessSecure
         public static IServiceCollection AddGmailLessSecureEmailSender(this IServiceCollection services)
         {
             services
-                .AddOptions()
-                .Configure<GmailAuthentication>()
+                .AddGmailAuthentication()
                 .AddSingleton<IEmailSender, EmailSender>()
                 ;
 

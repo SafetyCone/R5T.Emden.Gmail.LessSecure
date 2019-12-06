@@ -2,7 +2,7 @@
 
 using Microsoft.Extensions.Configuration;
 
-using R5T.Scotia;
+using R5T.Argos;
 
 
 namespace R5T.Emden.Gmail.LessSecure
@@ -11,7 +11,7 @@ namespace R5T.Emden.Gmail.LessSecure
     {
         public static IConfigurationBuilder AddGmailLessSecureConfiguration(this IConfigurationBuilder configurationBuilder)
         {
-            configurationBuilder.AddUserSecretsFileRivetLocation(FileNames.GmailLessSecureConfigurationJsonFileName);
+            configurationBuilder.AddGmailLessSecureAuthenticationConfiguration();
 
             return configurationBuilder;
         }
