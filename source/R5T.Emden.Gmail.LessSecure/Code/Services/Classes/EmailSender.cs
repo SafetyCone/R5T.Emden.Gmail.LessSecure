@@ -4,6 +4,8 @@ using System.Net.Mail;
 
 using Microsoft.Extensions.Options;
 
+using R5T.Gimpolis;
+
 
 namespace R5T.Emden.Gmail.LessSecure
 {
