@@ -9,9 +9,9 @@ namespace R5T.Emden.Gmail.LessSecure
 {
     public static class ConfigurationBuilderExtensions
     {
-        public static IConfigurationBuilder AddGmailLessSecureConfiguration(this IConfigurationBuilder configurationBuilder)
+        public static IConfigurationBuilder AddGmailLessSecureConfiguration(this IConfigurationBuilder configurationBuilder, IServiceProvider configurationServiceProvider)
         {
-            configurationBuilder.AddGmailLessSecureAuthenticationConfiguration();
+            configurationBuilder.AddGmailLessSecureAuthenticationConfiguration(configurationServiceProvider);
 
             return configurationBuilder;
         }
