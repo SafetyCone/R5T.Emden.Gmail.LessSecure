@@ -26,11 +26,14 @@ namespace R5T.Emden.Gmail.LessSecure
 
         public void Send(MailMessage message)
         {
-            var fromAddress = this.GmailAuthentication.Value.Address;
-            var fromAddressUsername = this.GmailAuthentication.Value.Username;
-            var fromAddressPassword = this.GmailAuthentication.Value.Password;
+            var gmailAuthentication = this.GmailAuthentication.Value;
 
-            message.From = new MailAddress(fromAddress);
+            var fromAddress = gmailAuthentication.Address;
+            var displayName = gmailAuthentication.DisplayName;
+            var fromAddressUsername = gmailAuthentication.Username;
+            var fromAddressPassword = gmailAuthentication.Password;
+
+            message.From = new MailAddress(fromAddress, displayName);
 
             using (var smtpClient = new SmtpClient()
             {
@@ -47,11 +50,14 @@ namespace R5T.Emden.Gmail.LessSecure
 
         public async Task SendAsync(MailMessage message)
         {
-            var fromAddress = this.GmailAuthentication.Value.Address;
-            var fromAddressUsername = this.GmailAuthentication.Value.Username;
-            var fromAddressPassword = this.GmailAuthentication.Value.Password;
+            var gmailAuthentication = this.GmailAuthentication.Value;
 
-            message.From = new MailAddress(fromAddress);
+            var fromAddress = gmailAuthentication.Address;
+            var displayName = gmailAuthentication.DisplayName;
+            var fromAddressUsername = gmailAuthentication.Username;
+            var fromAddressPassword = gmailAuthentication.Password;
+
+            message.From = new MailAddress(fromAddress, displayName);
 
             using (var smtpClient = new SmtpClient()
             {
