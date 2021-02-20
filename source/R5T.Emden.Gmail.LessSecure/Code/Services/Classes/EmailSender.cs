@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using R5T.Gimpolis;
@@ -17,11 +18,15 @@ namespace R5T.Emden.Gmail.LessSecure
 
 
         private IOptions<GmailAuthentication> GmailAuthentication { get; }
+        private ILogger Logger { get; }
 
 
-        public EmailSender(IOptions<GmailAuthentication> gmailAuthentication)
+        public EmailSender(
+            IOptions<GmailAuthentication> gmailAuthentication,
+            ILogger<EmailSender> logger)
         {
             this.GmailAuthentication = gmailAuthentication;
+            this.Logger = logger;
         }
 
         public void Send(MailMessage message)
@@ -35,16 +40,25 @@ namespace R5T.Emden.Gmail.LessSecure
 
             message.From = new MailAddress(fromAddress, displayName);
 
-            using (var smtpClient = new SmtpClient()
+            try
             {
-                Host = @"smtp.gmail.com",
-                Port = 587,
-                Credentials = new NetworkCredential(fromAddressUsername, fromAddressPassword),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-            })
+                using (var smtpClient = new SmtpClient()
+                {
+                    Host = @"smtp.gmail.com",
+                    Port = 587,
+                    Credentials = new NetworkCredential(fromAddressUsername, fromAddressPassword),
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                })
+                {
+                    smtpClient.Send(message);
+                }
+            }
+            catch (Exception exception)
             {
-                smtpClient.Send(message);
+                this.Logger.LogError(exception, "Failed to send email.");
+
+                throw exception; // Re-throw.
             }
         }
 
@@ -59,16 +73,25 @@ namespace R5T.Emden.Gmail.LessSecure
 
             message.From = new MailAddress(fromAddress, displayName);
 
-            using (var smtpClient = new SmtpClient()
+            try
             {
-                Host = @"smtp.gmail.com",
-                Port = 587,
-                Credentials = new NetworkCredential(fromAddressUsername, fromAddressPassword),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-            })
+                using (var smtpClient = new SmtpClient()
+                {
+                    Host = @"smtp.gmail.com",
+                    Port = 587,
+                    Credentials = new NetworkCredential(fromAddressUsername, fromAddressPassword),
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                })
+                {
+                    await smtpClient.SendMailAsync(message);
+                }
+            }
+            catch (Exception exception)
             {
-                await smtpClient.SendMailAsync(message);
+                this.Logger.LogError(exception, "Failed to send email.");
+
+                throw exception; // Re-throw.
             }
         }
     }
